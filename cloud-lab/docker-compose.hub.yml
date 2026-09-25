@@ -2,14 +2,19 @@ services:
   backend:
     image: minhanh43/mern-backend:1.0
     container_name: mern-backend-hub
-    ports:
-      - "5000:5000"
+    network_mode: host
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    command: >
+      sh -c "pkill -f 'server.js' || true; exec node server.js"
     environment:
       - PORT=5000
-      - MONGODB_URI=mongodb+srv://anh:anh123@cluster0.jdahtd2.mongodb.net/cloud_lab?appName=Cluster0
+      - MONGO_URI=mongodb+srv://Anh:anh123@cluster0.nw18gtl.mongodb.net/cloud_lab?appName=Cluster0
+    restart: unless-stopped
 
   frontend:
-    image: minhanh43/mern-frontend:1.0
+    image: minhanh43/mern-frontend:2.0
     container_name: mern-frontend-hub
     ports:
       - "3000:3000"
