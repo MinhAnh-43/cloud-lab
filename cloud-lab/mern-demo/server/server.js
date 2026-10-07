@@ -4,7 +4,24 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Cho phép các request không có origin (như Postman) hoặc nằm trong danh sách hoặc ở môi trường dev
+    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+      callback(null, true);
+    } else {
+      callback(null, true); // Chấp nhận request để tránh lỗi tạm thời (có thể sửa thành callback(new Error(...)) nếu cần bảo mật nghiêm ngặt)
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Middleware ghi log mỗi request

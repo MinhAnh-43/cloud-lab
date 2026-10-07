@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// !!! QUAN TRỌNG: Thay bằng URL Forwarded Port 5000 của bạn !!!
-const API_URL = 'http://localhost:5000/api/students';
+// URL backend trên Render
+const API_URL = 'https://mern-backend-235026.onrender.com/api/students';
 
 function App() {
   const [students, setStudents] = useState([]);
